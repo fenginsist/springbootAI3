@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Dashboard Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link  th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.css}" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link  th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+		</style>
+	</head>
+
+	<body>
+	<!--引入抽取的topbar-->
+	<!--<div th:insert="~{dashboard::topbar}"></div>-->
+	<!--<div th:replace="~{dashboard::topbar}"></div>-->    <!--模板名 加片段名-->
+	<div th:replace="~{commons/bar::topbar}"></div>
+
+		<div class="container-fluid">
+			<div class="row">
+			<!--引入侧边栏-->
+				<div th:replace="~{commons/bar::siderbar}"></div>
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<!--需要区分是员工修改还是添加；-->
+					<!--认真看下这个表单的源代码-->
+					<form th:action="@{/medicine}" method="post"  >
+						<!--一点击submit 就要发送put请求-->
+						<!--发送put请求修改员工数据-->
+
+						<!--
+						有三步
+						1、springMVC中配置  HiddenHttpMethodFilter(作用：就是将我们请求转成我们指定的方式)  （springboot自动配置好的）
+						2、页面创建一个post的表单
+						3、创建一个input框，name=“_method”;值就是我们指定的请求方式
+						-->
+
+						<!--if为true时 为修改页面  才有input框-->
+						<!--<input type="hidden" name="_method" value="put" th:if="${emp!=null}">-->
+						<!--提交员工id（传参）  if为true时 为修改页面 才有value-->
+						<!--<input type="hidden" name="id" th:if="${emp!=null}" th:value="${emp.id}">-->
+
+						<div class="form-group">
+							<label>Name</label>
+							<input name="m_Id" type="text" class="form-control" placeholder="请输入药品名" th:value="${emp!=null}?${emp.lastName}">
+						</div>
+						<div class="form-group">
+							<label>RO</label>
+							<input name="m_RO_o" type="text" class="form-control" placeholder="R或者O" th:value="${emp!=null}?${emp.lastName}">
+						</div>
+						<div class="form-group">
+							<label>function</label>
+							<input name="m_function" type="email" class="form-control" placeholder="请输入功能" th:value="${emp!=null}?${emp.email}">
+						</div>
+						<div class="form-group">
+							<label>medicament</label>
+							<input name="m_medicament" type="email" class="form-control" placeholder="剂量" th:value="${emp!=null}?${emp.email}">
+						</div>
+						<div class="form-group">
+							<label>m_type</label>
+							<select>
+								<option></option>
+							</select>
+							<input name="m_m_type" type="email" class="form-control" placeholder="西药，这里应该是下拉框" th:value="${emp!=null}?${emp.email}">
+						</div>
+						<div class="form-group">
+							<label>produce_country</label>
+							<input name="m_produce_country" type="email" class="form-control" placeholder="西班牙，生产之地，也是下拉框" th:value="${emp!=null}?${emp.email}">
+						</div>
+						<div class="form-group">
+							<label>in_or_out</label>
+							<input name="m_in_or_out" type="email" class="form-control" placeholder="内服或者外服，也是下拉框" th:value="${emp!=null}?${emp.email}">
+						</div>
+						<div class="form-group">
+							<label>type</label>
+							<input name="m_type" type="email" class="form-control" placeholder="心脑血管科，科室，也是下拉框" th:value="${emp!=null}?${emp.email}">
+						</div>
+						<!--th:text="${emp!=null}?'修改':'添加'"-->
+						<button type="submit" class="btn btn-primary" >添加</button>
+					</form>
+
+				</main>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js"></script>
+		<script type="text/javascript" src="asserts/js/popper.min.js"></script>
+		<script type="text/javascript" src="asserts/js/bootstrap.min.js"></script>
+
+		<!-- Icons -->
+		<script type="text/javascript" src="asserts/js/feather.min.js"></script>
+		<script>
+			feather.replace()
+		</script>
+
+		<!-- Graphs -->
+		<script type="text/javascript" src="asserts/js/Chart.min.js"></script>
+		<script>
+			var ctx = document.getElementById("myChart");
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+					datasets: [{
+						data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+						lineTension: 0,
+						backgroundColor: 'transparent',
+						borderColor: '#007bff',
+						borderWidth: 4,
+						pointBackgroundColor: '#007bff'
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: false
+							}
+						}]
+					},
+					legend: {
+						display: false,
+					}
+				}
+			});
+		</script>
+
+	</body>
+
+</html>

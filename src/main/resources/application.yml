@@ -1,0 +1,19 @@
+spring:
+  datasource:
+#   导入的 jdbc  druid数据源   驱动看不见
+    url: jdbc:mysql://101.132.115.92:3306/text?characterEncoding=UTF-8&useSSL=false
+    username: text
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+# 禁用缓存
+  thymeleaf:
+    cache: false
+#  改变路径
+server:
+  port: 9090
+
+
+mybatis:
+  #config-location: classpath:mybatis/mybatis-config.xml    这个不用了  老了
+  mapper-locations: classpath:mybatis/mapper/*.xml

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niepan.springbootai3.mapper.LoginUserMapper">
+
+
+    <resultMap id="select_user_password" type="com.niepan.springbootai3.bean.LoginUser">
+        <id column="u_id" property="u_id" jdbcType="INTEGER"></id>
+        <result column="u_username" property="u_username" jdbcType="VARCHAR"></result>
+        <result column="u_password" property="u_password" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+
+    <select id="getUserByName" parameterType="java.lang.String" resultMap="select_user_password">
+        SELECT  *  FROM  loginUser WHERE u_username=#{username,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="u_id" parameterType="com.niepan.springbootai3.bean.LoginUser">
+        INSERT INTO loginUser(u_username,u_password) VALUES(#{u_username},#{u_password})
+    </insert>
+
+</mapper>
